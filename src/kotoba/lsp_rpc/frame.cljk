@@ -5,7 +5,7 @@
   here is the DEFINITION, and this repo's deps.edn names exactly the
   definitions it reaches -- nothing else.
 "
-  (:require [kotoba.lang.json :as json])
+  (:require [kotoba.bytes :as kbytes] [kotoba.lang.json :as json])
 )
 
 (defn frame
@@ -13,5 +13,5 @@
   The body is JSON (via kotoba.lang.json)."
   [msg]
   (let [body (json/encode msg)
-        len  (count (.getBytes ^String body "UTF-8"))]
+        len  (count (kbytes/utf8-bytes ^String body))]
     (str "Content-Length: " len "\r\n\r\n" body)))
